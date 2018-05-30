@@ -7,7 +7,8 @@
     <style type="text/css">
         html{height:100%}
         body{height:100%;margin:0px;padding:0px}
-        #container{height:100%}
+        #container{height:90%}
+        #output{height:10%}
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=I16WZcgzSTBUUMapi5GxASAbkz4WIYxF">
     //v2.0版本的引用方式：src="http://api.map.baidu.com/api?v=2.0&ak=您的密钥"
@@ -15,6 +16,7 @@
     <script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js">
     </script>
     <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
+    <script type="text/javascript" src="./qwebchannel.js"></script>
 </head>
 
 <body>
@@ -61,6 +63,44 @@
         polygonOptions: styleOptions,       //多边形的样式
         rectangleOptions: styleOptions      //矩形的样式
     });
+
+    var point = new BMap.Point(116.404, 39.915);
+    var marker = new BMap.Marker(point);
+    map.addOverlay(marker);
+
+    function output(message)
+    {
+        var output = document.getElementById("output");
+        output.innerHTML = output.innerHTML + message + "\n";
+    }
+    window.onload = function() {
+    map.addEventListener("click", function(e) {
+        alert(e.point.lng + "," + e.point.lat);
+        new QWebChannel(qt.webChannelTransport, function(channel) {
+            // make dialog object accessible globally
+            var content = channel.objects.content;
+            content.receiveText(e.point.lng + "," + e.point.lat);
+        });
+    });
+    new QWebChannel(qt.webChannelTransport, function(channel) {
+        // make dialog object accessible globally
+        var content = channel.objects.content;
+
+        content.sendCoordinate.connect(function(message1, message2) {
+            output("Received message from client: " + message1 + message2);
+            // alert(message1 + "," + message2);
+            var point = new BMap.Point(parseFloat(message1), parseFloat(message2));
+            var marker = new BMap.Marker(point);
+            map.addOverlay(marker);
+        });
+
+        content.receiveText("Client connected, ready to send/receive messages!");
+        output("Connected to WebChannel, ready to send/receive messages!");
+    });
+    }
+
+
     </script>
+    <textarea id="output"></textarea><br />
 </body>
 </html>
