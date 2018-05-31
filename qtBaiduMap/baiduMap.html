@@ -85,13 +85,32 @@
     new QWebChannel(qt.webChannelTransport, function(channel) {
         // make dialog object accessible globally
         var content = channel.objects.content;
-
+        var alreadyHaveMarker = false;
+        var point;
+        var marker;
+        var points = [];        // uav所经过的所有的点的信息
+        var drawPoint = null;   // 实际在绘制航迹的时候需要画的点
+        var overlayPolylineUAVRoute = null;
         content.sendCoordinate.connect(function(message1, message2) {
-            output("Received message from client: " + message1 + message2);
+            // output("Received message from client: " + message1 + message2);
             // alert(message1 + "," + message2);
-            var point = new BMap.Point(parseFloat(message1), parseFloat(message2));
-            var marker = new BMap.Marker(point);
-            map.addOverlay(marker);
+            if(!alreadyHaveMarker) {
+                point = new BMap.Point(parseFloat(message1), parseFloat(message2));
+                points.push(point);
+                marker = new BMap.Marker(point);
+                map.addOverlay(marker);
+                drawPoint = points.concat(points[points.length - 1]);
+                overlayPolylineUAVRoute = new BMap.Polyline(drawPoint, {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5, strokeStyle:"dashed"});
+                map.addOverlay(overlayPolylineUAVRoute);
+                alreadyHaveMarker = true;
+            } else {
+                point = new BMap.Point(parseFloat(message1), parseFloat(message2));
+                points.push(point);
+                marker.setPosition(point);
+                drawPoint = points.concat(points[points.length - 1]);
+                overlayPolylineUAVRoute.setPath(drawPoint);
+            }
+
         });
 
         content.receiveText("Client connected, ready to send/receive messages!");

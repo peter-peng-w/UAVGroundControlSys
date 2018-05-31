@@ -26,12 +26,17 @@ public:
     double leftDirectionChangeAngle;    // 向左转弯时候以该角速度改变横滚角至某一特定的最大横滚角值以及复原
     double rightDirectionChangeAngle;   // 向右转弯时候以该角速度改变横滚角至某一特定的最大横滚角值以及复原
 
+    // 通过该参数模拟通信协议里面所包含的指令数据段
+    // 1->forward  2->backward  3->left  4->right  0[else]->stop
+    int control_status;
+
 public:
     void calculate_uav_coordinate_forward();
     void calculate_uav_coordinate_backward();
     void calculate_uav_coordinate_left();
     void calculate_uav_coordinate_right();
     void show_uav_position();
+    void init_control_status(int present_control_status);
     void set_start_pos(double lng, double lat);
 
 signals:
