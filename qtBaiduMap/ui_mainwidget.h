@@ -196,7 +196,7 @@ public:
         pushButton_4->setText(QApplication::translate("MainWidget", "Right", Q_NULLPTR));
         pushButton_5->setText(QApplication::translate("MainWidget", "Up", Q_NULLPTR));
         pushButton_3->setText(QApplication::translate("MainWidget", "Left", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("MainWidget", "Stop", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("MainWidget", "start", Q_NULLPTR));
         pushButton_6->setText(QApplication::translate("MainWidget", "Down", Q_NULLPTR));
         labelLng->setText(QApplication::translate("MainWidget", "Longitude", Q_NULLPTR));
         labelLat->setText(QApplication::translate("MainWidget", "Latitude   ", Q_NULLPTR));

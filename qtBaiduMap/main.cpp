@@ -10,6 +10,6 @@ int main(int argc, char *argv[])
     w.show();
     // UAVAgent uav_agent;
     // uav_agent.show_uav_position();
-    w.update_and_show_uav_pos();
+    // w.update_and_show_uav_pos();
     return a.exec();
 }

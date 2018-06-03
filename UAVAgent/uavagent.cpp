@@ -24,6 +24,8 @@ UAVAgent::UAVAgent(QWidget *parent)
     mainLayout->addWidget(startBtn);
     connect(startBtn, SIGNAL(clicked(bool)), this, SLOT(StartBtnClicked()));
 
+    show_uav_position();
+
     udpSocket = new QUdpSocket(this);
 
     myPort = 3355;
@@ -41,7 +43,7 @@ UAVAgent::UAVAgent(QWidget *parent)
     // 设置定时器，定时发送UAV自身的位置信息
     send_udp_timer = new QTimer(this);
     // timer定时器触发自身timeout，绑定槽函数发送广播
-    connect(timer, SIGNAL(timeout()), this, SLOT(send_uav_data()));
+    connect(send_udp_timer, SIGNAL(timeout()), this, SLOT(send_uav_data()));
 }
 
 UAVAgent::~UAVAgent()
@@ -69,7 +71,7 @@ void UAVAgent::StartBtnClicked()
         // TODO
         set_start_pos(116.404, 39.917);
         init_control_status(0);
-        send_udp_timer->start(100);
+        send_udp_timer->start(50);
         isStarted = true;
     } else
     {
@@ -92,19 +94,22 @@ void UAVAgent::update_uav_position()
     } else {
         // Do nothing, means stop or pause
     }
-    qDebug() << QString::number(this->uav_lng, 'f', 6) << " , " << QString::number(this->uav_lat, 'f', 6) << "\n";
+    qDebug() << QString::number(uav_data.uav_lng, 'f', 6) << " , " << QString::number(uav_data.uav_lat, 'f', 6) << "\n";
 }
 
 void UAVAgent::show_uav_position()
 {
-    qDebug() << "Inside agent";
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update_uav_position()));
-    timer->start(100);
+    timer->start(50);
 }
 
 void UAVAgent::send_uav_data()
 {
+    qDebug() << "send uav data to gcs";
+    uav_data.uav_lat = this->uav_lat;
+    uav_data.uav_lng = this->uav_lng;
+    uav_data.uav_status = this->control_status;
     udpSocket->writeDatagram((char*)&uav_data, sizeof(uav_data), QHostAddress::Broadcast, peerPort);
 }
 
@@ -128,6 +133,7 @@ void UAVAgent::calculate_uav_coordinate_forward()
     if(this->uav_lat < 90.0) {
         this->uav_lat += 0.000005;
     }
+
 }
 
 void UAVAgent::calculate_uav_coordinate_backward()

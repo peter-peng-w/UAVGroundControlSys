@@ -45,8 +45,8 @@ public:
 
 public slots:
     void update_and_show_uav_pos_slot();
-//    void send_gcs_control();    // 槽函数，传输GCS本地发送的控制指令数据报GCS_control
-//    void receive_uav_data();    // 槽函数，接收从UAVgent传输过来的远端uav数据报UAV_data
+    void send_gcs_control();    // 槽函数，传输GCS本地发送的控制指令数据报GCS_control
+    void receive_uav_data();    // 槽函数，接收从UAVgent传输过来的远端uav数据报UAV_data
 
 private slots:
     void on_pushButton_clicked();
@@ -63,7 +63,13 @@ private slots:
 
 private:
     bool isModified() const;
-
+    bool isStarted;
+    bool isSuccessBind;
+    int myPort;
+    int peerPort;
+    QUdpSocket *udpSocket;
+    UAV_data uav_data;
+    GCS_control gcs_control;
     Ui::MainWidget *ui;
     Document m_content;
     UAVAgent uav_agent;
