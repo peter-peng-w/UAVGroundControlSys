@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += webenginewidgets webchannel
+QT       += webenginewidgets webchannel network
 CONFIG   += c++11 console
 
 TARGET = webchanneltest

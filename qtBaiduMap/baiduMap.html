@@ -100,6 +100,7 @@
                 marker = new BMap.Marker(point);
                 map.addOverlay(marker);
                 drawPoint = points.concat(points[points.length - 1]);
+                // overlayPolylineUAVRoute用来绘制轨迹。设置strokeStyle为"dashed"或者"solid"可以分别得到虚线与实线
                 overlayPolylineUAVRoute = new BMap.Polyline(drawPoint, {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5, strokeStyle:"dashed"});
                 map.addOverlay(overlayPolylineUAVRoute);
                 alreadyHaveMarker = true;

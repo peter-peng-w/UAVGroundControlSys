@@ -763,6 +763,10 @@ moc_mainwidget.cpp: ../qtBaiduMap/document.h \
 		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtWebEngineWidgets.framework/Headers/qwebengineview.h \
 		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtCore.framework/Headers/QTimer \
+		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtCore.framework/Headers/qtimer.h \
+		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtCore.framework/Headers/qdebug.h \
 		../qtBaiduMap/uavagent.h \
 		../qtBaiduMap/mainwidget.h \
 		moc_predefs.h \
@@ -831,6 +835,10 @@ main.o: ../qtBaiduMap/main.cpp ../qtBaiduMap/document.h \
 		../qtBaiduMap/mainwidget.h \
 		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtCore.framework/Headers/QTimer \
+		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtCore.framework/Headers/qtimer.h \
+		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtCore.framework/Headers/qdebug.h \
 		../qtBaiduMap/uavagent.h \
 		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
@@ -846,6 +854,10 @@ mainwidget.o: ../qtBaiduMap/mainwidget.cpp ../qtBaiduMap/mainwidget.h \
 		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtWebEngineWidgets.framework/Headers/qwebengineview.h \
 		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtCore.framework/Headers/QTimer \
+		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtCore.framework/Headers/qtimer.h \
+		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtCore.framework/Headers/qdebug.h \
 		../qtBaiduMap/uavagent.h \
 		../qtBaiduMap/previewpage.h \
 		../../../../Developer/Qt-5.9.3/5.9.3/clang_64/lib/QtWebEngineWidgets.framework/Headers/QWebEnginePage \

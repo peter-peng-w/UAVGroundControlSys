@@ -50,7 +50,7 @@ void UAVAgent::show_uav_position()
 
 void UAVAgent::calculate_uav_coordinate_forward()
 {
-    // 暂时固定前向速度带来的效果是每次纬度 +0.000001
+    // 暂时固定前向速度带来的效果是每次纬度 +0.000005(待修改)
     // 但是实际上我们应当明确前向带来的效果是对于当前移动方向的加速
     // 应当为对于按下按键到放开按键的时间计时，在该时间段内加速
     if(this->uav_lat < 90.0) {
@@ -60,7 +60,7 @@ void UAVAgent::calculate_uav_coordinate_forward()
 
 void UAVAgent::calculate_uav_coordinate_backward()
 {
-    // 暂时固定后向速度带来的效果是每次纬度 -0.000001
+    // 暂时固定后向速度带来的效果是每次纬度 -0.000005(待修改)
     // 但是实际上我们需要明确后向带来的效果是对于当前移动方向反方向的加速
     // 参考上述forward()内的表述
     if(this->uav_lat > -90.0) {
@@ -70,7 +70,7 @@ void UAVAgent::calculate_uav_coordinate_backward()
 
 void UAVAgent::calculate_uav_coordinate_left()
 {
-    // 暂时固定右向速度带来的效果是每次经度 -0.000001
+    // 暂时固定右向速度带来的效果是每次经度 -0.000005(待修改)
     if(this->uav_lng < 180.0) {
         this->uav_lng -= 0.000005;
     }
@@ -78,7 +78,7 @@ void UAVAgent::calculate_uav_coordinate_left()
 
 void UAVAgent::calculate_uav_coordinate_right()
 {
-    // 暂时固定右向速度带来的效果是每次经度 +0.000001
+    // 暂时固定右向速度带来的效果是每次经度 +0.000005(待修改)
     if(this->uav_lng > -180.0) {
         this->uav_lng += 0.000005;
     }
