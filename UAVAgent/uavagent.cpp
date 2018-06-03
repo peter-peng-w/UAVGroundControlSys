@@ -5,7 +5,9 @@
 #include <QHostAddress>
 #include <QUdpSocket>
 
-UAVAgent::UAVAgent(QObject *parent) : QObject(parent)
+
+UAVAgent::UAVAgent(QWidget *parent)
+    : QWidget(parent)
 {
     // init
     uav_data.uav_lat = 0.000;
@@ -16,9 +18,16 @@ UAVAgent::UAVAgent(QObject *parent) : QObject(parent)
     qDebug() << sizeof(uav_data);
     qDebug() << "\n";
 
+    setWindowTitle(tr("UAV Agent"));
+    startBtn = new QPushButton(tr("Start"), this);
+    mainLayout = new QVBoxLayout(this);
+    mainLayout->addWidget(startBtn);
+    connect(startBtn, SIGNAL(clicked(bool)), this, SLOT(StartBtnClicked()));
+
     udpSocket = new QUdpSocket(this);
 
     myPort = 3355;
+    isStarted = false;
     isSuccessBind = udpSocket->bind(myPort);
     if(!isSuccessBind)
     {
@@ -30,8 +39,7 @@ UAVAgent::UAVAgent(QObject *parent) : QObject(parent)
     // 设置目标端口
     peerPort = 5555;
     // 设置定时器，定时发送UAV自身的位置信息
-    timer = new QTimer(this);
-    timer->start(100);
+    send_udp_timer = new QTimer(this);
     // timer定时器触发自身timeout，绑定槽函数发送广播
     connect(timer, SIGNAL(timeout()), this, SLOT(send_uav_data()));
 }
@@ -50,6 +58,25 @@ void UAVAgent::set_start_pos(double lng, double lat)
 {
     this->uav_lng = lng;
     this->uav_lat = lat;
+}
+
+void UAVAgent::StartBtnClicked()
+{
+    if(!isStarted)
+    {
+        startBtn->setText(tr("Stop"));
+        // 初始化内容，确定agent起始位置，后续可以继续更改逻辑
+        // TODO
+        set_start_pos(116.404, 39.917);
+        init_control_status(0);
+        send_udp_timer->start(100);
+        isStarted = true;
+    } else
+    {
+        startBtn->setText(tr("Start"));
+        send_udp_timer->stop();
+        isStarted = false;
+    }
 }
 
 void UAVAgent::update_uav_position()

@@ -28,13 +28,13 @@ struct GCS_control {
 };
 #pragma pack();
 
-class UAVAgent : public QObject
+class UAVAgent : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit UAVAgent(QObject *parent = nullptr);
-    // UAVAgent(QWidget *parent = 0);
+    // explicit UAVAgent(QObject *parent = nullptr);
+    UAVAgent(QWidget *parent = 0);
     double uav_lat;            // uav所在位置的纬度
     double uav_lng;            // uav所在位置的经度
     // 注：百度地图的经纬度精度为小数点后六位，这里暂时不考虑真实经纬度(国际标准)与百度地图(国内标准)的经纬度之间的换算
@@ -72,6 +72,7 @@ public slots:
     void update_uav_position();
     void send_uav_data();
     void receive_gcs_control();
+    void StartBtnClicked();
 
 
 private:
@@ -83,7 +84,8 @@ private:
     bool isStarted;
     bool isSuccessBind;
     QUdpSocket *udpSocket;
-    QTimer *timer;
+    QTimer *send_udp_timer;
+    QTimer *update_uav_timer;
     UAV_data uav_data;
 };
 
