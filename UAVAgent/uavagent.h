@@ -19,14 +19,11 @@ struct UAV_data {
     double uav_lat;
     int uav_status;
 };
-#pragma pack()
-
-#pragma pack(1)
 struct GCS_control {
     int control_direction;
     // double change_degree;
 };
-#pragma pack();
+#pragma pack()
 
 class UAVAgent : public QWidget
 {
