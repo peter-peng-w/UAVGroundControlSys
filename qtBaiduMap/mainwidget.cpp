@@ -54,10 +54,12 @@ bool MainWidget::isModified() const
 
 void MainWidget::on_pushButton_clicked()
 {
+    // 向地图上发送一个经纬度坐标并标注
     // m_content.setSendTextText(ui->lineEditLng->text());
     m_content.setSendCoordinate(ui->lineEditLng->text(), ui->lineEditLat->text());
 }
 
+/*
 void MainWidget::update_and_show_uav_pos()
 {
     uav_agent.set_start_pos(116.404, 39.917);
@@ -74,7 +76,8 @@ void MainWidget::update_and_show_uav_pos_slot()
     m_content.setSendCoordinate(QString::number(uav_agent.uav_lng, 'f', 6), QString::number(uav_agent.uav_lat, 'f', 6));
     qDebug() << "Have sent: " + QString::number(uav_agent.uav_lng, 'f', 6) + " , " + QString::number(uav_agent.uav_lat, 'f', 6) + "\n";
 }
-
+*/
+/*
 void MainWidget::on_pushButton_5_clicked()
 {
     // Forward Button Clicked
@@ -84,7 +87,89 @@ void MainWidget::on_pushButton_5_clicked()
     gcs_control.control_direction = 1;
     send_gcs_control();
 }
+*/
 
+void MainWidget::on_pushButton_5_pressed()
+{
+    if(this->isStarted) {
+        gcs_control.control_direction = 1;
+        send_gcs_control();
+    } else {
+        // Wait and Do nothing
+    }
+}
+
+void MainWidget::on_pushButton_5_released()
+{
+    if(this->isStarted) {
+        gcs_control.control_direction = 5;
+        send_gcs_control();
+    } else {
+        // Wait and Do nothing
+    }
+}
+
+void MainWidget::on_pushButton_6_pressed()
+{
+    if(this->isStarted) {
+        gcs_control.control_direction = 2;
+        send_gcs_control();
+    } else {
+        // Wait and Do nothing
+    }
+}
+
+void MainWidget::on_pushButton_6_released()
+{
+    if(this->isStarted) {
+        gcs_control.control_direction = 5;
+        send_gcs_control();
+    } else {
+        // Wait and Do nothing
+    }
+}
+
+void MainWidget::on_pushButton_3_pressed()
+{
+    if(this->isStarted) {
+        gcs_control.control_direction = 3;
+        send_gcs_control();
+    } else {
+        // Wait and Do nothing
+    }
+}
+
+void MainWidget::on_pushButton_3_released()
+{
+    if(this->isStarted) {
+        gcs_control.control_direction = 5;
+        send_gcs_control();
+    } else {
+        // Wait and Do nothing
+    }
+}
+
+void MainWidget::on_pushButton_4_pressed()
+{
+    if(this->isStarted) {
+        gcs_control.control_direction = 4;
+        send_gcs_control();
+    } else {
+        // Wait and Do nothing
+    }
+}
+
+void MainWidget::on_pushButton_4_released()
+{
+    if(this->isStarted) {
+        gcs_control.control_direction = 5;
+        send_gcs_control();
+    } else {
+        // Wait and Do nothing
+    }
+}
+
+/*
 void MainWidget::on_pushButton_6_clicked()
 {
     // Backward Button Clicked
@@ -108,6 +193,7 @@ void MainWidget::on_pushButton_4_clicked()
     gcs_control.control_direction = 4;
     send_gcs_control();
 }
+*/
 
 void MainWidget::on_pushButton_2_clicked()
 {
@@ -118,6 +204,7 @@ void MainWidget::on_pushButton_2_clicked()
     {
         ui->pushButton_2->setText(tr("Stop"));
         isStarted = true;
+        send_gcs_control();
     } else
     {
         ui->pushButton_2->setText(tr("Start"));
@@ -132,9 +219,10 @@ void MainWidget::receive_uav_data()
     {
         udpSocket->readDatagram((char*)&uav_data, sizeof(uav_data));
         qDebug() << "receive uav control data from agent";
-        qDebug() << uav_data.uav_lng;
-        qDebug() << uav_data.uav_lat;
-        qDebug() << uav_data.uav_status;
+        // qDebug() << uav_data.uav_lng;
+        // qDebug() << uav_data.uav_lat;
+        // qDebug() << uav_data.uav_status;
+        qDebug() << QString::number(uav_data.uav_lng) + " " + QString::number(uav_data.uav_lat) + " " + QString::number(uav_data.uav_status);
         qDebug() << "sending data to Map";
         m_content.setSendCoordinate(QString::number(uav_data.uav_lng, 'f', 6), QString::number(uav_data.uav_lat, 'f', 6));
         qDebug() << "Have sent: " + QString::number(uav_data.uav_lng, 'f', 6) + " , " + QString::number(uav_data.uav_lat, 'f', 6) + "\n";
@@ -144,4 +232,5 @@ void MainWidget::receive_uav_data()
 void MainWidget::send_gcs_control()
 {
     udpSocket->writeDatagram((char*)&gcs_control, sizeof(gcs_control), QHostAddress::Broadcast, peerPort);
+    qDebug() << "Send control to agent: " + QString::number(gcs_control.control_direction) + '\n';
 }

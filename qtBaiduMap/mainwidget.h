@@ -21,6 +21,9 @@ class MainWidget;
 struct UAV_data {
     double uav_lng;
     double uav_lat;
+    double uav_direction_angle;
+    double speed;
+    double altitude;
     int uav_status;
 };
 struct GCS_control {
@@ -41,21 +44,34 @@ public:
 //    void setEnabled(bool);
 
 public slots:
-    void update_and_show_uav_pos_slot();
+    // void update_and_show_uav_pos_slot();
     void send_gcs_control();    // 槽函数，传输GCS本地发送的控制指令数据报GCS_control
     void receive_uav_data();    // 槽函数，接收从UAVgent传输过来的远端uav数据报UAV_data
 
 private slots:
     void on_pushButton_clicked();
 
-    void on_pushButton_5_clicked();
+    // void on_pushButton_5_clicked();
+    // up
+    void on_pushButton_5_pressed();
+    void on_pushButton_5_released();
 
-    void on_pushButton_6_clicked();
+    // down
+    // void on_pushButton_6_clicked();
+    void on_pushButton_6_pressed();
+    void on_pushButton_6_released();
 
-    void on_pushButton_3_clicked();
+    // left
+    // void on_pushButton_3_clicked();
+    void on_pushButton_3_pressed();
+    void on_pushButton_3_released();
 
-    void on_pushButton_4_clicked();
+    // right
+    // void on_pushButton_4_clicked();
+    void on_pushButton_4_pressed();
+    void on_pushButton_4_released();
 
+    // start
     void on_pushButton_2_clicked();
 
 private:
@@ -69,7 +85,7 @@ private:
     GCS_control gcs_control;
     Ui::MainWidget *ui;
     Document m_content;
-    UAVAgent uav_agent;
+    // UAVAgent uav_agent;
 };
 
 #endif // MAINWIDGET_H
