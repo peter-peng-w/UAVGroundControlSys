@@ -3,6 +3,9 @@
 #include "previewpage.h"
 #include "document.h"
 #include "uavagent.h"
+#include "widgetsix.h"
+#include "widgetpfd.h"
+
 
 #include <QFile>
 #include <QWebChannel>
@@ -18,14 +21,14 @@ MainWidget::MainWidget(QWidget *parent) :
     PreviewPage *page = new PreviewPage(this);
     ui->preview->setPage(page);
     m_content.setUi(ui);
-
     QWebChannel *channel = new QWebChannel(this);
     channel->registerObject(QStringLiteral("content"), &m_content);
     page->setWebChannel(channel);
 
     ui->preview->setUrl(QUrl("qrc:/baiduMap.html"));
 
-    ui->editor->setPlainText("hello...\n");
+    // ui->editor->setPlainText("hello...\n");
+
 
     myPort = 5555;
     peerPort = 3355;
@@ -49,7 +52,14 @@ MainWidget::~MainWidget()
 
 bool MainWidget::isModified() const
 {
-    return ui->editor->document()->isModified();
+    //return ui->editor->document()->isModified();
+    return true;
+}
+
+
+void MainWidget::setPFD()
+{
+
 }
 
 void MainWidget::on_pushButton_clicked()
@@ -226,6 +236,23 @@ void MainWidget::receive_uav_data()
         qDebug() << "sending data to Map";
         m_content.setSendCoordinate(QString::number(uav_data.uav_lng, 'f', 6), QString::number(uav_data.uav_lat, 'f', 6));
         qDebug() << "Have sent: " + QString::number(uav_data.uav_lng, 'f', 6) + " , " + QString::number(uav_data.uav_lat, 'f', 6) + "\n";
+
+        ui->widgetPFD->setAirspeed( uav_data.speed );
+        ui->widgetPFD->setAltitude( uav_data.altitude );
+        ui->widgetPFD->setRoll( uav_data.roll );
+        ui->widgetPFD->setPitch( uav_data.pitch );
+        ui->widgetPFD->setHeading( uav_data.uav_direction_angle );
+        ui->widgetPFD->setTurnRate( uav_data.yaw );
+
+        ui->widgetSix->setAirspeed( uav_data.speed );
+        ui->widgetSix->setAltitude( uav_data.altitude );
+        ui->widgetSix->setRoll( uav_data.roll );
+        ui->widgetSix->setPitch( uav_data.pitch );
+        ui->widgetSix->setHeading( uav_data.uav_direction_angle );
+        ui->widgetSix->setTurnRate( uav_data.yaw );
+
+        ui->widgetPFD->update();
+        ui->widgetSix->update();
     }
 }
 

@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QString>
 #include <QtNetwork/QUdpSocket>
+#include <QTime>
 #include <QTimer>
 #include <QDebug>
 #include <QObject>
@@ -21,9 +22,12 @@ class MainWidget;
 struct UAV_data {
     double uav_lng;
     double uav_lat;
-    double uav_direction_angle;
-    double speed;
-    double altitude;
+    float uav_direction_angle;
+    float speed;
+    float altitude;
+    float pitch;
+    float yaw;
+    float roll;
     int uav_status;
 };
 struct GCS_control {
@@ -40,6 +44,7 @@ public:
     explicit MainWidget(QWidget *parent = 0);
     ~MainWidget();
     void update_and_show_uav_pos();
+    void setPFD();
 //public Q_SLOTS:
 //    void setEnabled(bool);
 
@@ -85,7 +90,15 @@ private:
     GCS_control gcs_control;
     Ui::MainWidget *ui;
     Document m_content;
-    // UAVAgent uav_agent;
+
+    // UAVAgent uav_agent; // not used anymore, replaced by independent agent
+
+    // about QFlightInstrument,
+    // used to randomly generate value of all kinds of paras
+    int m_timerId;
+    int m_steps;
+    float m_realTime;
+    QTime m_time;
 };
 
 #endif // MAINWIDGET_H

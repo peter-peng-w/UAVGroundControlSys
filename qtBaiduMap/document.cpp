@@ -57,7 +57,8 @@ void Document::setSendCoordinate(const QString &textLongitude, const QString &te
 
 void Document::displayMessage(const QString &message)
 {
-      mainUi->editor->appendPlainText(message);
+      //mainUi->editor->appendPlainText(message);
+    qDebug() << "show document" + message;
 }
 
 /*!

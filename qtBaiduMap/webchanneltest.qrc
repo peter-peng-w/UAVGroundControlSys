@@ -3,5 +3,7 @@
         <file>index.html</file>
         <file>qwebchannel.js</file>
         <file>baiduMap.html</file>
+        <file>fox.gif</file>
+        <file>drone.png</file>
     </qresource>
 </RCC>
