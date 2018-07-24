@@ -12,7 +12,7 @@
 为了增加项目的丰富程度，本项目还对于无人机航线规划进行了简单的研究。参考[这里](http://rkala.in/codes.php)对于无人机航线规划中的几种基础算法进行实现与测试。
 
 ## 未来推进方向建议
-个人认为目前项目如果继续采用Qt的话，baseline可以尝试模仿QGroundControl进行实现。除了一些基本的操作之外我觉得可以继续推进的地方主要有两个，其一是采用更多的二维以及三维GIS/地图，如目前Qt社区中最著名的GIS软件[QGIS](https://www.qgis.org/en/site/)，不过其只能解决二维GIS的问题。如果希望进一步使用三维GIS，推荐尝试[Cesium](https://cesiumjs.org/)。Cesium是一款开源二三维GIS，支持对于二三维的地理信息模型进行分析与展示。不过Cesium是基于浏览器端的，可以尝试利用NodeJs部署于本地。但是似乎目前Qt的版本的WebEngine模块还不支持WebGL（据说下一个版本会加入对于WebGL的支持不知道是不是真的，不过Qt最近版本更新很快）。如果抛去对于真实GIS的需求，我认为在Qt平台上可以考虑加入[OpenSceneGraph](http://www.openscenegraph.org/)。引入OSG之后就可以自己搭一些模拟的测试环境来测试控制算法或者航线规划算法。事实上也可以使用Unity3D来操作，但是好像Unity3D跟Qt之间结合比较麻烦。  
+个人认为目前项目如果继续采用Qt的话，baseline可以尝试模仿QGroundControl进行实现。除了一些基本的操作之外我觉得可以继续推进的地方主要有两个，其一是采用更多的二维以及三维GIS/地图，如目前Qt社区中最著名的GIS软件[QGIS](https://www.qgis.org/en/site/)，不过其只能解决二维GIS的问题（他倒是也有二三维一体化功能，但是我看了一下感觉只是一个假的三维图层，也可能是我看错了...）。如果希望进一步使用三维GIS，推荐尝试[Cesium](https://cesiumjs.org/)。Cesium是一款开源二三维GIS，支持对于二三维的地理信息模型进行分析与展示。不过Cesium是基于浏览器端的，可以尝试利用NodeJs部署于本地。但是似乎目前Qt的版本的WebEngine模块还不支持WebGL（据说下一个版本会加入对于WebGL的支持不知道是不是真的，不过Qt最近版本更新很快）。如果抛去对于真实GIS的需求，我认为在Qt平台上可以考虑加入[OpenSceneGraph](http://www.openscenegraph.org/)。引入OSG之后就可以自己搭一些模拟的测试环境来测试控制算法或者航线规划算法。事实上也可以使用Unity3D来操作，但是好像Unity3D跟Qt之间结合比较麻烦。  
 其二是，可以采用[FlightGear](https://home.flightgear.org/)来代替我自己写的无人机代理UAVAgent。FlightGear对于各种型号的无人机或者有人机都有较好的仿真。通过进程通信/网络通信就可以实现FlightGear与主程序的UAVQGC的数据通信。  
 
 当然我觉得如果改用C#框架应当是一个更佳的选择。事实上最开始我考虑的方式是将MissionPlanner与ArcGIS融合从而构建一个可以自定义飞行环境的无人机地面站，但是MissionPlanner的学习成本比较高，且ArcGIS始终无法获得一些我希望得到的功能效果，所以最终放弃。不过MissionPlanner依旧是优秀的且被广泛使用的（同时具有很大提升空间）项目，值得学习，同时可以与Unity3D无缝对接。这样只需要拥有在Unity中的GIS数据就可以实现三维显示。同时通过Unity也可以方便构建一些城市楼宇环境并且采用各种各样的已经存在的算法或者新的ML(尤其是RL)算法来进行无人机航线规划算法的研究与测试，最终构建一个集无人机地面站与无人机仿真及航路规划算法测试于一体的平台。
